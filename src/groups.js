@@ -7,12 +7,13 @@ exports.simulateGroupPhase = async () => {
   groups = await util.readJSONFile("./groups.json");
 
   console.log("GRUPNA FAZA:");
-  intializeStandings(groups);
+  groups = intializeStandings(groups); // add standings fields to the every team in groups
+
   printGroups(groups);
 };
 
 function simulateMatch(team1, team2) {
-  const rankDifferenece = team1.rank - tean2.rank;
+  const rankDifferenece = team1.rank - team2.rank;
 }
 
 function intializeStandings(groups) {
@@ -26,6 +27,7 @@ function intializeStandings(groups) {
       totalPoints: 0,
     }));
   });
+  // console.log(groups);
   return groups;
 }
 
@@ -37,13 +39,7 @@ function printGroups(groups) {
 
     groups[group].forEach((team) => {
       console.log(
-        `  ${team.Team} (ISO Code: ${team.ISOCode}, FIBA Ranking: ${
-          team.FIBARanking
-        }, Wins: ${team.wins || 0}, Losses: ${
-          team.losses || 0
-        }, Points Scored: ${team.pointsScored || 0}, Points Conceded: ${
-          team.pointsConceded || 0
-        }, Total Points: ${team.totalPoints || 0})`
+        `  ${team.Team} (ISO Code: ${team.ISOCode}, FIBA Ranking: ${team.FIBARanking}, Wins: ${team.wins}, Losses: ${team.losses}, Points Scored: ${team.pointsScored}, Points Conceded: ${team.pointsConceded}, Total Points: ${team.totalPoints})`
       );
     });
 
