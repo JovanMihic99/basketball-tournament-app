@@ -6,6 +6,15 @@ exports.readJSONFile = async (path) => {
     const res = JSON.parse(data);
     return res;
   } catch (error) {
-    console.error("Error reading '" + path + "':\n\t", error);
+    console.error(`Error reading '${path}':\n\t${error}`);
+  }
+};
+exports.writeJSONFile = async (path, data) => {
+  try {
+    const jsonString = JSON.stringify(data, null, 2);
+    await fs.writeFile(path, jsonString, "utf8");
+    console.log(`Successfully written to '${path}'`);
+  } catch (error) {
+    console.error(`Error writing '${path}':\n\t${error}`);
   }
 };
