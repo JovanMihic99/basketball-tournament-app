@@ -1,7 +1,10 @@
 const fs = require("fs").promises;
 const util = require("./util");
+const matchesController = require("./matches");
 
 let groups = {};
+
+let matches = matchesController.matches;
 
 exports.simulateGroupPhase = async () => {
   groups = await util.readJSONFile("./groups.json");
@@ -10,12 +13,13 @@ exports.simulateGroupPhase = async () => {
   groups = intializeStandings(groups); // add standings fields to the every team in groups
 
   printGroups(groups);
-  SimulateAllGroupMatches(groups);
+  simulateAllGroupMatches(groups);
   printGroups(groups);
 };
 
-function SimulateAllGroupMatches(groups) {
-  Object.keys(groups).forEach((group) => {
+async function simulateAllGroupMatches(groups) {
+  // Use a for...of loop instead of forEach for async operations
+  for (const group of Object.keys(groups)) {
     const teams = groups[group];
 
     for (let i = 0; i < teams.length; i++) {
@@ -24,43 +28,64 @@ function SimulateAllGroupMatches(groups) {
         const team2 = teams[j];
 
         const result = simulateMatch(team1, team2);
-        console.log(
-          `group ${group}, i, j: (${i}, ${j})), ${team1.ISOCode} Vs ${team2.ISOCode} | Winner: ${result.winner.ISOCode}`
-        );
-        // update winner
-        updateTeamStandings(group, result.winner.ISOCode, {
-          wins: result.winner.wins + 1,
-        });
-        // update loser
-        updateTeamStandings(group, result.loser.ISOCode, {
-          losses: result.loser.losses + 1,
-        });
+        await matchesController.addMatch(result);
+
+        updateTeamStandings(group, result, team1, team2);
       }
     }
-  });
+    matchesController.printMatches();
+  }
 
   function simulateMatch(team1, team2) {
-    winner = team1;
-    loser = team2;
-    if (Math.random() > 0.5) {
-      winner = team2;
-      loser = team1;
-    }
-    return { winner, loser };
+    const minPoints = 65;
+    const maxPoints = 120;
+
+    let match = {
+      team1ISO: team1.ISOCode,
+      team2ISO: team2.ISOCode,
+      score1: util.getRandomNumberBetween(minPoints, maxPoints),
+      score2: util.getRandomNumberBetween(minPoints, maxPoints),
+    };
+
+    return match;
   }
-  function updateTeamStandings(group, isoCode, newValue) {
+
+  function updateTeamStandings(group, result, team1, team2) {
     const groupArray = groups[group];
     if (!groupArray) {
       console.error("No group found!");
+      return;
     }
 
-    const team = groupArray.find((team) => team.ISOCode === isoCode);
+    // Determine winner and loser
+    const winner = result.score1 > result.score2 ? team1 : team2;
+    const loser = result.score1 > result.score2 ? team2 : team1;
 
-    if (team) {
-      Object.assign(team, newValue);
-    } else {
-      console.error("No team found!");
-    }
+    // Update the standings for the winner
+    const updatedWinner = {
+      wins: winner.wins + 1,
+      pointsScored: winner.pointsScored + result.score1,
+      pointsConceded: winner.pointsConceded + result.score2,
+      tournamentPoints: winner.tournamentPoints + 2, // 2 points for a win
+    };
+
+    // Update the standings for the loser
+    const updatedLoser = {
+      losses: loser.losses + 1,
+      pointsScored: loser.pointsScored + result.score2,
+      pointsConceded: loser.pointsConceded + result.score1,
+      tournamentPoints: loser.tournamentPoints + 1, // 1 point for a loss
+    };
+
+    // Update both teams in the group
+    Object.assign(
+      groupArray.find((team) => team.ISOCode === winner.ISOCode),
+      updatedWinner
+    );
+    Object.assign(
+      groupArray.find((team) => team.ISOCode === loser.ISOCode),
+      updatedLoser
+    );
   }
 }
 
@@ -70,7 +95,10 @@ function intializeStandings(groups) {
       ...team,
       wins: 0,
       losses: 0,
-      totalPoints: 0,
+      rank: null,
+      pointsScored: 0,
+      pointsConceded: 0,
+      tournamentPoints: 0,
     }));
   });
   // console.log(groups);
@@ -85,7 +113,7 @@ function printGroups(groups) {
 
     groups[group].forEach((team) => {
       console.log(
-        `  ${team.Team} (ISO Code: ${team.ISOCode}, FIBA Ranking: ${team.FIBARanking}, Wins: ${team.wins}, Losses: ${team.losses}, Total Points: ${team.totalPoints})`
+        `  ${team.Team} (ISO Code: ${team.ISOCode}, FIBA Ranking: ${team.FIBARanking}, Wins: ${team.wins}, Losses: ${team.losses}, Total Points: ${team.tournamentPoints})`
       );
     });
 
