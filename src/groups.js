@@ -128,11 +128,7 @@ function printMatchesByGroup(matches, groups) {
       // start value for J is used to be able to print only 2 matches at a time.
       const match = matches[j];
       console.log(
-        `    ${match.team1Name} - ${match.team2Name} |${match.score1}:${
-          match.score2
-        } | winner: [${
-          match.score1 > match.score2 ? match.team1ISO : match.team2ISO
-        }]`
+        `    ${match.team1Name} - ${match.team2Name} | (${match.score1}:${match.score2})`
       );
     }
     startValueJ += 2;
