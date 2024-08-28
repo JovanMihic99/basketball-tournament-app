@@ -12,8 +12,7 @@ exports.simulateGroupPhase = async () => {
   console.log("GRUPNA FAZA:");
   groups = intializeStandings(groups); // add standings fields to the every team in groups
 
-  printGroups(groups);
-  simulateAllGroupMatches(groups);
+  await simulateAllGroupMatches(groups);
   printGroups(groups);
 };
 
@@ -28,12 +27,11 @@ async function simulateAllGroupMatches(groups) {
 
         const result = simulateMatch(team1, team2);
         await matchesController.addMatch(result);
-
         updateTeamStandings(group, result, team1, team2);
       }
     }
-    matchesController.printMatches();
   }
+  matchesController.printMatches();
 
   function simulateMatch(team1, team2) {
     const minPoints = 65;
@@ -55,7 +53,6 @@ async function simulateAllGroupMatches(groups) {
       console.error("No group found!");
       return;
     }
-
     // Determine winner and loser
     const winner = result.score1 > result.score2 ? team1 : team2;
     const loser = result.score1 > result.score2 ? team2 : team1;
@@ -81,6 +78,7 @@ async function simulateAllGroupMatches(groups) {
       groupArray.find((team) => team.ISOCode === winner.ISOCode),
       updatedWinner
     );
+
     Object.assign(
       groupArray.find((team) => team.ISOCode === loser.ISOCode),
       updatedLoser
