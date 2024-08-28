@@ -44,8 +44,8 @@ async function simulateAllGroupMatches(groups) {
     let match = {
       team1ISO: team1.ISOCode,
       team2ISO: team2.ISOCode,
-      score1: util.getRandomNumberBetween(minPoints, maxPoints),
-      score2: util.getRandomNumberBetween(minPoints, maxPoints),
+      score1,
+      score2,
       team1Name: team1.Team,
       team2Name: team2.Team,
     };
