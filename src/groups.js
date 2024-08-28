@@ -18,7 +18,6 @@ exports.simulateGroupPhase = async () => {
 };
 
 async function simulateAllGroupMatches(groups) {
-  // Use a for...of loop instead of forEach for async operations
   for (const group of Object.keys(groups)) {
     const teams = groups[group];
 

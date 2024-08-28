@@ -17,7 +17,6 @@ exports.printMatches = () => {
 exports.addMatch = async (match = {}) => {
   await loadMatches();
   const newMatch = { ...match, id: matches.length + 1 };
-  console.log(newMatch);
   matches.push(newMatch);
   await saveMatches();
 };
@@ -27,12 +26,7 @@ exports.getMatches = () => {
 };
 
 async function saveMatches() {
-  try {
-    await util.writeJSONFile(matchesFile, matches);
-    console.log("saveMatches", matches);
-  } catch (error) {
-    console.log(error);
-  }
+  await util.writeJSONFile(matchesFile, matches);
 }
 
 async function loadMatches() {
