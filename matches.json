@@ -1,0 +1,164 @@
+[
+  {
+    "team1ISO": "CAN",
+    "team2ISO": "AUS",
+    "score1": 70,
+    "score2": 92,
+    "team1Name": "Kanada",
+    "team2Name": "Australija",
+    "id": 1
+  },
+  {
+    "team1ISO": "CAN",
+    "team2ISO": "GRE",
+    "score1": 97,
+    "score2": 101,
+    "team1Name": "Kanada",
+    "team2Name": "Grčka",
+    "id": 2
+  },
+  {
+    "team1ISO": "CAN",
+    "team2ISO": "ESP",
+    "score1": 72,
+    "score2": 100,
+    "team1Name": "Kanada",
+    "team2Name": "Španija",
+    "id": 3
+  },
+  {
+    "team1ISO": "AUS",
+    "team2ISO": "GRE",
+    "score1": 78,
+    "score2": 77,
+    "team1Name": "Australija",
+    "team2Name": "Grčka",
+    "id": 4
+  },
+  {
+    "team1ISO": "AUS",
+    "team2ISO": "ESP",
+    "score1": 93,
+    "score2": 107,
+    "team1Name": "Australija",
+    "team2Name": "Španija",
+    "id": 5
+  },
+  {
+    "team1ISO": "GRE",
+    "team2ISO": "ESP",
+    "score1": 111,
+    "score2": 78,
+    "team1Name": "Grčka",
+    "team2Name": "Španija",
+    "id": 6
+  },
+  {
+    "team1ISO": "GER",
+    "team2ISO": "FRA",
+    "score1": 112,
+    "score2": 116,
+    "team1Name": "Nemačka",
+    "team2Name": "Francuska",
+    "id": 7
+  },
+  {
+    "team1ISO": "GER",
+    "team2ISO": "BRA",
+    "score1": 109,
+    "score2": 70,
+    "team1Name": "Nemačka",
+    "team2Name": "Brazil",
+    "id": 8
+  },
+  {
+    "team1ISO": "GER",
+    "team2ISO": "JPN",
+    "score1": 113,
+    "score2": 108,
+    "team1Name": "Nemačka",
+    "team2Name": "Japan",
+    "id": 9
+  },
+  {
+    "team1ISO": "FRA",
+    "team2ISO": "BRA",
+    "score1": 83,
+    "score2": 107,
+    "team1Name": "Francuska",
+    "team2Name": "Brazil",
+    "id": 10
+  },
+  {
+    "team1ISO": "FRA",
+    "team2ISO": "JPN",
+    "score1": 104,
+    "score2": 70,
+    "team1Name": "Francuska",
+    "team2Name": "Japan",
+    "id": 11
+  },
+  {
+    "team1ISO": "BRA",
+    "team2ISO": "JPN",
+    "score1": 79,
+    "score2": 106,
+    "team1Name": "Brazil",
+    "team2Name": "Japan",
+    "id": 12
+  },
+  {
+    "team1ISO": "USA",
+    "team2ISO": "SRB",
+    "score1": 87,
+    "score2": 101,
+    "team1Name": "Sjedinjene Države",
+    "team2Name": "Srbija",
+    "id": 13
+  },
+  {
+    "team1ISO": "USA",
+    "team2ISO": "SSD",
+    "score1": 117,
+    "score2": 89,
+    "team1Name": "Sjedinjene Države",
+    "team2Name": "Južni Sudan",
+    "id": 14
+  },
+  {
+    "team1ISO": "USA",
+    "team2ISO": "PRI",
+    "score1": 82,
+    "score2": 89,
+    "team1Name": "Sjedinjene Države",
+    "team2Name": "Puerto Riko",
+    "id": 15
+  },
+  {
+    "team1ISO": "SRB",
+    "team2ISO": "SSD",
+    "score1": 112,
+    "score2": 69,
+    "team1Name": "Srbija",
+    "team2Name": "Južni Sudan",
+    "id": 16
+  },
+  {
+    "team1ISO": "SRB",
+    "team2ISO": "PRI",
+    "score1": 90,
+    "score2": 118,
+    "team1Name": "Srbija",
+    "team2Name": "Puerto Riko",
+    "id": 17
+  },
+  {
+    "team1ISO": "SSD",
+    "team2ISO": "PRI",
+    "score1": 72,
+    "score2": 90,
+    "team1Name": "Južni Sudan",
+    "team2Name": "Puerto Riko",
+    "id": 18
+  }
+]

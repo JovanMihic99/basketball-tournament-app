@@ -125,13 +125,13 @@ function printMatchesByGroup(matches, groups) {
   for (let i = 0; i < 9; i++) {
     console.log(`  ${romanNumerals[i + 1]} kolo:`);
     for (let j = startValueJ; j < 2 + startValueJ; j++) {
-      // start value for J is used to be able to print only 2 matches at a time.
+      // start value for J is used to print only 2 matches at a time.
       const match = matches[j];
       console.log(
         `    ${match.team1Name} - ${match.team2Name} | (${match.score1}:${match.score2})`
       );
     }
-    startValueJ += 2;
+    startValueJ += 2; // add 2 to start value to skip already printed matches
   }
 }
 
