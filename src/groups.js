@@ -8,12 +8,11 @@ let matches = matchesController.getMatches();
 
 exports.simulateGroupPhase = async () => {
   groups = await util.readJSONFile("./groups.json");
-
-  console.log("GRUPNA FAZA:");
   groups = intializeStandings(groups); // add standings fields to the every team in groups
 
   await simulateAllGroupMatches(groups);
-  printGroups(groups);
+  matches = matchesController.getMatches();
+  printMatchesByGroup(matches, groups);
 };
 
 async function simulateAllGroupMatches(groups) {
@@ -30,7 +29,7 @@ async function simulateAllGroupMatches(groups) {
       }
     }
   }
-  matchesController.printMatches();
+  // matchesController.printMatches();
 
   function simulateMatch(team1, team2, group = null) {
     const minPoints = 65;
@@ -47,6 +46,8 @@ async function simulateAllGroupMatches(groups) {
       team2ISO: team2.ISOCode,
       score1: util.getRandomNumberBetween(minPoints, maxPoints),
       score2: util.getRandomNumberBetween(minPoints, maxPoints),
+      team1Name: team1.Team,
+      team2Name: team2.Team,
     };
 
     return match;
@@ -107,14 +108,43 @@ function intializeStandings(groups) {
   return groups;
 }
 
-function printGroups(groups) {
-  console.log("Grupe:");
-  Object.keys(groups).forEach((group) => {
-    console.log(`Grupa ${group}:`);
+function printMatchesByGroup(matches, groups) {
+  console.log("GRUPNA FAZA:");
+  const romanNumerals = {
+    1: "I",
+    2: "II",
+    3: "III",
+    4: "IV",
+    5: "V",
+    6: "VI",
+    7: "VII",
+    8: "VIII",
+    9: "IX",
+  };
+  let startValueJ = 0;
+  for (let i = 0; i < 9; i++) {
+    console.log(`  ${romanNumerals[i + 1]} kolo:`);
+    for (let j = startValueJ; j < 2 + startValueJ; j++) {
+      // start value for J is used to be able to print only 2 matches at a time.
+      const match = matches[j];
+      console.log(
+        `    ${match.team1Name} - ${match.team2Name} |${match.score1}:${
+          match.score2
+        } | winner: [${
+          match.score1 > match.score2 ? match.team1ISO : match.team2ISO
+        }]`
+      );
+    }
+    startValueJ += 2;
+  }
+}
 
+function printGroups(groups) {
+  let groupsArray = Object.keys(groups);
+  groupsArray.forEach((group) => {
     groups[group].forEach((team) => {
       console.log(
-        `  ${team.Team} (ISO Code: ${team.ISOCode}, FIBA Ranking: ${team.FIBARanking}, Wins: ${team.wins}, Losses: ${team.losses}, Total Points: ${team.tournamentPoints})`
+        `\t\t${team.Team} (ISO Code: ${team.ISOCode}, FIBA Ranking: ${team.FIBARanking}, Wins: ${team.wins}, Losses: ${team.losses}, Total Points: ${team.tournamentPoints})`
       );
     });
 
