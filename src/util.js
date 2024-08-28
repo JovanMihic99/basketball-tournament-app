@@ -13,7 +13,7 @@ exports.writeJSONFile = async (path, data) => {
   try {
     const jsonString = JSON.stringify(data, null, 2);
     await fs.writeFile(path, jsonString, "utf8");
-    console.log(`Successfully written to '${path}'`);
+    // console.log(`Successfully written to '${path}'`);
   } catch (error) {
     console.error(`Error writing '${path}':\n\t${error}`);
   }
