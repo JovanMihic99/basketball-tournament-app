@@ -4,7 +4,7 @@ const matchesController = require("./matches");
 
 let groups = {};
 
-let matches = matchesController.matches;
+let matches = matchesController.getMatches();
 
 exports.simulateGroupPhase = async () => {
   groups = await util.readJSONFile("./groups.json");
@@ -24,7 +24,6 @@ async function simulateAllGroupMatches(groups) {
       for (let j = i + 1; j < teams.length; j++) {
         const team1 = teams[i];
         const team2 = teams[j];
-
         const result = simulateMatch(team1, team2);
         await matchesController.addMatch(result);
         updateTeamStandings(group, result, team1, team2);
@@ -33,9 +32,15 @@ async function simulateAllGroupMatches(groups) {
   }
   matchesController.printMatches();
 
-  function simulateMatch(team1, team2) {
+  function simulateMatch(team1, team2, group = null) {
     const minPoints = 65;
     const maxPoints = 120;
+    let score1 = util.getRandomNumberBetween(minPoints, maxPoints);
+    let score2 = util.getRandomNumberBetween(minPoints, maxPoints);
+
+    if (score1 === score2) {
+      score1 += Math.floor(Math.random() * 3) + 1; // if there is a tie, simulate overtime by giving one team 1-3 points
+    }
 
     let match = {
       team1ISO: team1.ISOCode,
@@ -104,7 +109,6 @@ function intializeStandings(groups) {
 
 function printGroups(groups) {
   console.log("Grupe:");
-
   Object.keys(groups).forEach((group) => {
     console.log(`Grupa ${group}:`);
 
