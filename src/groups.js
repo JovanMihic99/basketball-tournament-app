@@ -15,6 +15,7 @@ exports.simulateGroupPhase = async () => {
   matches = matchesController.getMatches(); // put simulated matches into this variable
   printMatchesByGroup(matches, groups); // print the matches in console
   printGroups(groups);
+  printGroupPhaseResults(groups);
 };
 
 async function simulateAllGroupMatches(groups) {
@@ -140,11 +141,50 @@ function printMatchesByGroup(matches, groups) {
     for (let j = startValueJ; j < 2 + startValueJ; j++) {
       const match = matches[j];
       console.log(
-        `    ${match.team1Name} - ${match.team2Name} | (${match.score1}:${match.score2})`
+        `    ${match.team1Name} - ${match.team2Name} `.padEnd(36) +
+          ` | (${match.score1}:${match.score2})`
       );
     }
+    console.log("");
     startValueJ += 2; // add 2 to start value to skip already printed matches
   }
+}
+
+function printGroupPhaseResults(groups) {
+  // Prints final results of group phase
+  console.log("Konačni plasman u grupama:");
+
+  Object.keys(groups).forEach((group) => {
+    let teams = [...groups[group]];
+    teams.sort(
+      (team1, team2) => team2.tournamentPoints - team1.tournamentPoints
+    ); // Sort teams by tournamentPoints in descending order
+
+    console.log(
+      `  Grupa ${group} (Ime - pobede/porazi | bodovi | postignuti koševi | primljeni koševi | koš razlika):`
+    );
+    // Loop through the sorted teams and print their stats
+    teams.forEach((team, index) => {
+      team.rank = index + 1; // add rank to team
+      printGroupPhaseTeam(team, index);
+    });
+  });
+}
+
+function printGroupPhaseTeam(team, index) {
+  // helper function to print one team
+  const winLoss = `${team.wins}/${team.losses}`;
+  const points = team.tournamentPoints;
+  const scoredPoints = team.pointsScored;
+  const concededPoints = team.pointsConceded;
+  const pointDifference = scoredPoints - concededPoints;
+
+  console.log(
+    `    ${index + 1}. ${team.Team} `.padEnd(27) +
+      ` - ${winLoss} | ${points} | ${scoredPoints} | ${concededPoints} | ${
+        pointDifference > 0 ? "+" + pointDifference : pointDifference
+      }`
+  );
 }
 
 function printGroups(groups) {
@@ -155,6 +195,8 @@ function printGroups(groups) {
       console.log(
         `\t\t${team.Team} (ISO Code: ${team.ISOCode}, FIBA Ranking: ${team.FIBARanking}, Wins: ${team.wins}, Losses: ${team.losses}, Total Points: ${team.tournamentPoints})`
       );
+
+      // console.log(team);
     });
 
     console.log("");
