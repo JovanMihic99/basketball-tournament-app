@@ -14,6 +14,7 @@ exports.simulateGroupPhase = async () => {
   await simulateAllGroupMatches(groups); // simulate all the matches
   matches = matchesController.getMatches(); // put simulated matches into this variable
   printMatchesByGroup(matches, groups); // print the matches in console
+  printGroups(groups);
 };
 
 async function simulateAllGroupMatches(groups) {
@@ -70,21 +71,25 @@ function updateTeamStandings(group, result, team1, team2) {
   // Determine winner and loser
   const winner = result.score1 > result.score2 ? team1 : team2;
   const loser = result.score1 > result.score2 ? team2 : team1;
+  const winnerScore =
+    result.score1 > result.score2 ? result.score1 : result.score2;
+  const loserScore =
+    result.score1 > result.score2 ? result.score2 : result.score1;
 
   // Update the standings for the winner
   const updatedWinner = {
-    wins: winner.wins + 1,
-    pointsScored: winner.pointsScored + result.score1,
-    pointsConceded: winner.pointsConceded + result.score2,
-    tournamentPoints: winner.tournamentPoints + 2, // 2 points for a win
+    wins: winner.wins + 1, // Add 1 win to the winner's record
+    pointsScored: winner.pointsScored + winnerScore, // Add points scored in this match
+    pointsConceded: winner.pointsConceded + loserScore, // Add points conceded (points the loser scored)
+    tournamentPoints: winner.tournamentPoints + 2, // Add 2 points for a win
   };
 
   // Update the standings for the loser
   const updatedLoser = {
-    losses: loser.losses + 1,
-    pointsScored: loser.pointsScored + result.score2,
-    pointsConceded: loser.pointsConceded + result.score1,
-    tournamentPoints: loser.tournamentPoints + 1, // 1 point for a loss
+    losses: loser.losses + 1, // Add 1 loss to the loser's record
+    pointsScored: loser.pointsScored + loserScore, // Add points scored in this match
+    pointsConceded: loser.pointsConceded + winnerScore, // Add points conceded (points the winner scored)
+    tournamentPoints: loser.tournamentPoints + 1, // Add 1 point for a loss
   };
 
   // Update both teams in the group
