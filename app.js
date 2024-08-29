@@ -1,8 +1,11 @@
 const groupPhaseController = require("./src/controllers/groupPhaseController");
-const drawController = require("./src/controllers/quarterFinalDrawController");
+const quarterFinalController = require("./src/controllers/quarterFinalController");
 
-function main() {
-  groupPhaseController.simulateGroupPhase();
+async function main() {
+  let groupResults = await groupPhaseController.simulateGroupPhase();
+  let groups = groupResults.groups;
+  quarterFinalController.simulateQuarterFinals(groups);
+  // console.log(groupResults.matches);
 }
 
 main();

@@ -17,6 +17,13 @@ exports.simulateGroupPhase = async () => {
 
   // matchesController.printGroups(groups);
   printGroupPhaseResults(groups);
+  // console.log(matches);
+  let result = {
+    matches: matches,
+    groups: groups,
+  };
+  // console.log(result);
+  return result;
 };
 
 function printGroupPhaseResults(groups) {
@@ -48,7 +55,6 @@ function printGroupPhaseTeam(team, index) {
   const scoredPoints = team.pointsScored;
   const concededPoints = team.pointsConceded;
   const pointDifference = scoredPoints - concededPoints;
-  const rank = team.rank;
 
   console.log(
     `    ${index + 1}. ${team.Team}`.padEnd(24) +
