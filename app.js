@@ -1,7 +1,7 @@
-const groupPhase = require("./src/controllers/groupPhaseController");
+const groupPhaseController = require("./src/controllers/groupPhaseController");
 
 function main() {
-  groupPhase.simulateGroupPhase();
+  groupPhaseController.simulateGroupPhase();
 }
 
 main();
