@@ -22,18 +22,22 @@ exports.simulateGroupPhase = async () => {
 function printGroupPhaseResults(groups) {
   // Prints final results of group phase
   console.log("Konačan plasman u grupama:");
+  let offset = 0;
   Object.keys(groups).forEach((group) => {
     let teams = [...groups[group]];
     teams = rankTeamsInGroup(teams, matches); // Sort teams
 
     console.log(
-      `  Grupa ${group} (Ime - pobede/porazi | bodovi | postignuti koševi | primljeni koševi | koš razlika):`
+      `  Grupa ${group} (Ime | pobede/porazi | bodovi | postignuti koševi | primljeni koševi | koš razlika):`
     );
     // Loop through the sorted teams and print their stats
     teams.forEach((team, index) => {
-      team.rank = index + 1; // add rank to team
+      if (index < 3) {
+        team.rank = offset + index + 1; // assign a rank from 1 to 9 for the first three ranked teams in each group
+      }
       printGroupPhaseTeam(team, index);
     });
+    offset += 3;
   });
 }
 
@@ -44,12 +48,13 @@ function printGroupPhaseTeam(team, index) {
   const scoredPoints = team.pointsScored;
   const concededPoints = team.pointsConceded;
   const pointDifference = scoredPoints - concededPoints;
+  const rank = team.rank;
 
   console.log(
-    `    ${index + 1}. ${team.Team} `.padEnd(27) +
-      ` - ${winLoss} | ${points} | ${scoredPoints} | ${concededPoints} | ${
+    `    ${index + 1}. ${team.Team}`.padEnd(24) +
+      ` | ${winLoss} | ${points} | ${scoredPoints} | ${concededPoints} | ${
         pointDifference > 0 ? "+" + pointDifference : pointDifference
-      }`
+      }}`
   );
 }
 
