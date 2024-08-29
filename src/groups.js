@@ -7,6 +7,7 @@ let groups = {};
 let matches = matchesController.getMatches();
 
 exports.simulateGroupPhase = async () => {
+  // simulates all matches in the Grop Phase and prints them in the console
   groups = await util.readJSONFile("./groups.json");
   groups = intializeStandings(groups); // add standings fields to the every team in groups
 
@@ -99,7 +100,7 @@ function updateTeamStandings(group, result, team1, team2) {
 }
 
 function intializeStandings(groups) {
-  // initialize all the standings fields in groups array
+  // initializes all the standings fields in groups array
   Object.keys(groups).forEach((group) => {
     groups[group] = groups[group].map((team) => ({
       ...team,
