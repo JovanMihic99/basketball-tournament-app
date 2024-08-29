@@ -1,4 +1,3 @@
-const fs = require("fs").promises;
 const util = require("../util/util");
 const matchesController = require("./matchesController");
 const standingsController = require("./standingsController");
@@ -15,14 +14,14 @@ exports.simulateGroupPhase = async () => {
   await matchesController.simulateAllGroupMatches(groups); // simulate all the matches
   matches = matchesController.getMatches(); // put simulated matches into this variable
   matchesController.printMatchesByGroup(matches, groups); // print the matches in console
+
   // matchesController.printGroups(groups);
   printGroupPhaseResults(groups);
 };
 
 function printGroupPhaseResults(groups) {
   // Prints final results of group phase
-  console.log("Konačni plasman u grupama:");
-
+  console.log("Konačan plasman u grupama:");
   Object.keys(groups).forEach((group) => {
     let teams = [...groups[group]];
     teams = rankTeamsInGroup(teams, matches); // Sort teams
