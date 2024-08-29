@@ -122,6 +122,14 @@ exports.printGroups = (groups) => {
   });
 };
 
+exports.haveTeamsPlayedAlready = (iso1, iso2) => {
+  return matches.some(
+    (m) =>
+      (m.team1ISO === iso1 && m.team2ISO === iso2) ||
+      (m.team1ISO === iso2 && m.team2ISO === iso1)
+  );
+};
+
 async function saveMatches() {
   await util.writeJSONFile(matchesFile, matches);
 }
