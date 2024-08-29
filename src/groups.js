@@ -32,14 +32,19 @@ async function simulateAllGroupMatches(groups) {
   // matchesController.printMatches();
 }
 
-function simulateMatch(team1, team2, group = null) {
+function simulateMatch(team1, team2) {
   const minPoints = 65;
   const maxPoints = 120;
   let score1 = util.getRandomNumberBetween(minPoints, maxPoints);
   let score2 = util.getRandomNumberBetween(minPoints, maxPoints);
 
   if (score1 === score2) {
-    score1 += Math.floor(Math.random() * 3) + 1; // if there is a tie, simulate overtime by giving one team 1-3 points
+    // if there is a tie, simulate overtime by randomly giving one team 1-3 points
+    if (Math.random() > 0.5) {
+      score1 += Math.floor(Math.random() * 3) + 1;
+    } else {
+      score2 += Math.floor(Math.random() * 3) + 1;
+    }
   }
   // create match object
   let match = {
