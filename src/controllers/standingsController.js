@@ -1,3 +1,7 @@
+const util = require("../util/util");
+const exibitionsFile = "./exibitions.json";
+let exibitions = loadExibitions();
+
 exports.updateTeamStandings = (groups, group, result, team1, team2) => {
   const forfeitProbability = 0.005; // used for simulating forfeit (to be implemented...)
   const groupArray = groups[group];
@@ -52,8 +56,59 @@ exports.initializeStandings = (groups) => {
       pointsScored: 0,
       pointsConceded: 0,
       tournamentPoints: 0,
+      condition: initializeConditions(team.ISOCode),
     }));
   });
-  // console.log(groups);
+  // initializeConditions("GER");
+  console.log(groups);
+  // console.log();
+  // Object.keys(groups).forEach((group) => {
+  //   groups[group] = groups[group].map((team) => ({
+  //     ...team,
+  //   }));
+  // });
   return groups;
 };
+
+function initializeConditions(isoCode) {
+  let condition;
+  let totalCondition;
+  let count;
+
+  const team = exibitions[isoCode];
+
+  // console.log(exibition);
+
+  condition = 1.0;
+  totalCondition = 0;
+  count = 0;
+  team.forEach((game) => {
+    let score = game.Result.split("-")[0];
+    let opponentScore = game.Result.split("-")[1];
+
+    let scoreRatioMultiplyer = (score - opponentScore) / score;
+
+    let calculatedCondition = condition + scoreRatioMultiplyer;
+
+    if (calculatedCondition <= 0) {
+      calculatedCondition = 0;
+    } else if (calculatedCondition >= 1.0) {
+      calculatedCondition = 1.0;
+    }
+    condition = calculatedCondition >= 1.0 ? 1 : calculatedCondition;
+    totalCondition += condition;
+    count++;
+    // console.log("condition: ", condition);
+  });
+  let avgCondition = totalCondition / count;
+  // console.log("avg cond: " + avgCondition);
+
+  return avgCondition;
+}
+async function loadExibitions() {
+  try {
+    exibitions = await util.readJSONFile(exibitionsFile);
+  } catch (error) {
+    console.log(error);
+  }
+}

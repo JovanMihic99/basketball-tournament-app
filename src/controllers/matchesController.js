@@ -1,8 +1,10 @@
 const matchesFile = "./matches.json";
+const exibitionsFile = "./exibitions.json";
 const util = require("../util/util");
 const standingsController = require("./standingsController");
 
 matches = [];
+let exibitions = loadExibitions();
 saveMatches();
 
 exports.printMatches = () => {
@@ -55,6 +57,7 @@ exports.printMatchesByGroup = (matches, groups) => {
 };
 
 exports.simulateAllGroupMatches = async (groups) => {
+  // console.log(exibitions);
   for (const group of Object.keys(groups)) {
     const teams = groups[group];
 
@@ -82,8 +85,10 @@ exports.simulateAllGroupMatches = async (groups) => {
 exports.simulateMatch = (team1, team2) => {
   const minPoints = 65;
   const maxPoints = 120;
-  let score1 = util.getRandomNumberBetween(minPoints, maxPoints);
-  let score2 = util.getRandomNumberBetween(minPoints, maxPoints);
+  let t1Condition = team1.condition; // condition is a number between 0 and 1 used
+  let t2Condition = team1.condition;
+  let score1 = util.getRandomNumberBetween(minPoints, maxPoints) * t1Condition;
+  let score2 = util.getRandomNumberBetween(minPoints, maxPoints) * t2Condition;
 
   if (score1 === score2) {
     // if there is a tie, simulate overtime by randomly giving one team 1-3 points
@@ -105,6 +110,10 @@ exports.simulateMatch = (team1, team2) => {
 
   return match;
 };
+
+function calculateScore(team1, team2) {
+  // let score1 =
+}
 
 exports.printGroups = (groups) => {
   // prints values of groups array into the console (used for debugging)
@@ -131,6 +140,16 @@ exports.haveTeamsPlayedAlready = (team1, team2) => {
       (m.team1ISO === iso2 && m.team2ISO === iso1)
   );
 };
+
+function getFIBARanking(iso) {}
+
+async function loadExibitions() {
+  try {
+    exibitions = await util.readJSONFile(exibitionsFile);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 async function saveMatches() {
   await util.writeJSONFile(matchesFile, matches);

@@ -106,7 +106,7 @@ function drawMatch(pot1, pot2) {
     let canTeamsPlay = matchesController.haveTeamsPlayedAlready(team1, team2);
 
     // Used because there is possible issue in the assignment where it is impossible for two teams to be drawn from E and F pots having never played against eachother in the group phase
-    // canTeamsPlay = true;
+    canTeamsPlay = true;
 
     // Check if teams have played against each other
     if (canTeamsPlay) {
