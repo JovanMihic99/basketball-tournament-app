@@ -83,12 +83,32 @@ exports.simulateAllGroupMatches = async (groups) => {
 };
 
 exports.simulateMatch = (team1, team2) => {
+  let scores = calculateScore(team1, team2);
+
+  // create match object
+  let match = {
+    team1ISO: team1.ISOCode,
+    team2ISO: team2.ISOCode,
+    score1: scores.score1,
+    score2: scores.score2,
+    team1Name: team1.Team,
+    team2Name: team2.Team,
+  };
+
+  return match;
+};
+
+function calculateScore(team1, team2) {
   const minPoints = 65;
   const maxPoints = 120;
-  let t1Condition = team1.condition; // condition is a number between 0 and 1 used
-  let t2Condition = team1.condition;
-  let score1 = util.getRandomNumberBetween(minPoints, maxPoints) * t1Condition;
-  let score2 = util.getRandomNumberBetween(minPoints, maxPoints) * t2Condition;
+  let t1Condition = team1.condition; // condition is a number between 0 and 1
+  let t2Condition = team2.condition;
+  let score1 = Math.trunc(
+    util.getRandomNumberBetween(minPoints, maxPoints) * t1Condition // random number between min and max multiplied by condition
+  );
+  let score2 = Math.trunc(
+    util.getRandomNumberBetween(minPoints, maxPoints) * t2Condition
+  );
 
   if (score1 === score2) {
     // if there is a tie, simulate overtime by randomly giving one team 1-3 points
@@ -98,21 +118,8 @@ exports.simulateMatch = (team1, team2) => {
       score2 += Math.floor(Math.random() * 3) + 1;
     }
   }
-  // create match object
-  let match = {
-    team1ISO: team1.ISOCode,
-    team2ISO: team2.ISOCode,
-    score1,
-    score2,
-    team1Name: team1.Team,
-    team2Name: team2.Team,
-  };
 
-  return match;
-};
-
-function calculateScore(team1, team2) {
-  // let score1 =
+  return { score1, score2 };
 }
 
 exports.printGroups = (groups) => {
