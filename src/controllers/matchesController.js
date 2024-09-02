@@ -103,10 +103,11 @@ function calculateScore(team1, team2) {
   const maxPoints = 120;
   let t1Condition = team1.condition; // condition is a number between 0 and 1
   let t2Condition = team2.condition;
-  let score1 = Math.trunc(
+
+  let score1 = Math.round(
     util.getRandomNumberBetween(minPoints, maxPoints) * t1Condition // random number between min and max multiplied by condition
   );
-  let score2 = Math.trunc(
+  let score2 = Math.round(
     util.getRandomNumberBetween(minPoints, maxPoints) * t2Condition
   );
 
@@ -147,8 +148,6 @@ exports.haveTeamsPlayedAlready = (team1, team2) => {
       (m.team1ISO === iso2 && m.team2ISO === iso1)
   );
 };
-
-function getFIBARanking(iso) {}
 
 async function loadExibitions() {
   try {
