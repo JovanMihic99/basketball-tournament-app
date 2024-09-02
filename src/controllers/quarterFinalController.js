@@ -54,6 +54,7 @@ function drawTeams(groups) {
 
 function drawQuarterFinalists() {
   // ...to be finished
+  console.log(pots);
 
   quarterFinals.DG1 = drawMatch(pots.D, pots.G);
   quarterFinals.DG2 = drawMatch(pots.D, pots.G);
@@ -62,9 +63,9 @@ function drawQuarterFinalists() {
   quarterFinals.EF2 = drawMatch(pots.E, pots.F);
   // console.log(pots);
   // console.log(quarterFinals);
-  // console.log(pots);
 }
 function drawMatch(pot1, pot2) {
+  // needs to be re-written entirely
   // let team1 = pot1.shift();
   // let team2 = pot2.shift();
   // let result = {
@@ -96,15 +97,19 @@ function drawMatch(pot1, pot2) {
   // }
 
   let attempts = 0;
-  const maxAttempts = 100; // Set a maximum number of attempts to prevent infinite loops
+  const maxAttempts = 16; // Set a maximum number of attempts to prevent infinite loops
 
   while (attempts < maxAttempts) {
     // Draw teams
     let team1 = pot1.shift();
     let team2 = pot2.shift();
+    let canTeamsPlay = matchesController.haveTeamsPlayedAlready(team1, team2);
+
+    // Used because there is possible issue in the assignment where it is impossible for two teams to be drawn from E and F pots having never played against eachother in the group phase
+    // canTeamsPlay = true;
 
     // Check if teams have played against each other
-    if (!matchesController.haveTeamsPlayedAlready(team1, team2)) {
+    if (canTeamsPlay) {
       // Return the valid match
       return {
         team1,
@@ -122,9 +127,6 @@ function drawMatch(pot1, pot2) {
 
   // If maximum attempts are reached and no valid match found, handle the error
   throw new Error("Unable to draw a valid match after multiple attempts");
-
-  // Return the drawn matches
-  return matches;
 
   // while (matchesController.haveTeamsPlayedAlready(team1, team2)) {
   //   console.log(
