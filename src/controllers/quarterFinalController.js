@@ -70,11 +70,11 @@ function drawTeams(groups) {
 }
 
 function drawQuarterFinalists() {
-  let DG1 = drawMatch("D", "G");
-  let DG2 = drawMatch("D", "G");
+  let DG1 = drawMatch("D", "G")[0];
+  let DG2 = drawMatch("D", "G")[1];
 
-  let EF1 = drawMatch("E", "F");
-  let EF2 = drawMatch("E", "F");
+  let EF1 = drawMatch("E", "F")[0];
+  let EF2 = drawMatch("E", "F")[1];
 
   quarterFinals.DG1 = DG1;
   quarterFinals.DG2 = DG2;
@@ -83,47 +83,38 @@ function drawQuarterFinalists() {
   // console.log(quarterFinals);
 }
 function drawMatch(potKey1, potKey2) {
-  let team1, team2;
+  // let team1, team2;
   pot1 = pots[potKey1];
   pot2 = pots[potKey2];
+  // since there are only two possible draws I hard-coded them
+  const draws = [
+    [
+      [pot1[0], pot2[0]], // Match 1
+      [pot1[1], pot2[1]], // Match 2
+    ],
+    [
+      [pot1[0], pot2[1]], // Match 1
+      [pot1[1], pot2[0]], // Match 2
+    ],
+  ];
+  for (const draw of draws) {
+    const [match1, match2] = draw;
+    const [team1A, team1B] = match1;
+    const [team2A, team2B] = match2;
 
-  // A Set to track previously attempted combinations
-  const attemptedMatches = new Set();
-
-  const maxAttempts = pot1.length * pot2.length;
-  let attempts = 0;
-
-  while (attempts < maxAttempts && pot1.length > 0 && pot2.length > 0) {
-    attempts++;
-
-    team1 = pot1.pop();
-    team2 = pot2.pop();
-    const matchKey = (team1, team2) => {
-      `${team1}-${team2}`;
-    };
-
-    // Check if this combination was already attempted
-    if (!attemptedMatches.has(matchKey)) {
-      attemptedMatches.add(matchKey); // Record this combination
-
-      if (!matchesController.haveTeamsPlayedAlready(team1, team2)) {
-        return [team1, team2]; // Valid match found
-      }
+    if (
+      !matchesController.haveTeamsPlayedAlready(team1A, team1B) &&
+      !matchesController.haveTeamsPlayedAlready(team2A, team2B)
+    ) {
+      return draw;
     }
-
-    // If the combination was already attempted or teams have played, put them back
-    pot1.unshift(team1);
-    pot2.unshift(team2);
-    // let p1t1 = pot1[o]
-    util.shuffleArray(pot1);
-    util.shuffleArray(pot2);
   }
 
   // If no valid match was found, fall back to next available teams
   console.warn(
     `\u001B[3m\u001B[90mUpozorenje:  Za date šešire (${potKey1}, ${potKey2}) nije bilo moguće naći sve parove koji nisu međusobno igrali utakmicu u grupnoj fazi.`
   );
-  return [pot1.pop(), pot2.pop()];
+  // return [pot1.pop(), pot2.pop()];
 }
 
 function printDrawResults() {
