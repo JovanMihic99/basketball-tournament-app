@@ -40,7 +40,7 @@ async function main() {
     bronzeMatch.score1 > bronzeMatch.score2
       ? bronzeMatch.team1Name
       : bronzeMatch.team2Name;
-  console.log("\x1b[38;5;253m", `\n Medalje:\x1b[0m`);
+  console.log("\x1b[36m%s", `\n Medalje:\x1b[0m`);
   console.log("\x1b[38;5;220m", `  1. ${gold}\x1b[0m`);
   console.log("\x1b[38;5;250m", `  2. ${silver}\x1b[0m`);
   console.log("\x1b[38;5;172m", `  3. ${bronze}\x1b[0m`);

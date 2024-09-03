@@ -43,7 +43,7 @@ exports.printMatchesByGroup = (matches, groups) => {
   };
   let startValueJ = 0; // start value for J is used to print only 2 matches at a time.
   for (let i = 0; i < 9; i++) {
-    console.log("\x1b[36m%s\x1b[0m", `  ${romanNumerals[i + 1]} kolo:`);
+    console.log("\x1b[38;5;110m", `  ${romanNumerals[i + 1]} kolo:\x1b[0m`);
     for (let j = startValueJ; j < 2 + startValueJ; j++) {
       const match = matches[j];
       console.log(
