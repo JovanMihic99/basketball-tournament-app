@@ -84,8 +84,8 @@ function drawQuarterFinalists() {
 }
 function drawMatch(potKey1, potKey2) {
   let team1, team2;
-  pot1 = pots[potKey1];
-  pot2 = pots[potKey2];
+  pot1 = pots[potKey1].slice();
+  pot2 = pots[potKey2].slice();
 
   // A Set to track previously attempted combinations
   const attemptedMatches = new Set();
@@ -114,8 +114,18 @@ function drawMatch(potKey1, potKey2) {
     // If the combination was already attempted or teams have played, put them back
     pot1.unshift(team1);
     pot2.unshift(team2);
-    util.shuffleArray(pot1);
-    util.shuffleArray(pot2);
+    let swapArrayElements = function (arr, indexA, indexB) {
+      let temp = arr[indexA];
+      arr[indexA] = arr[indexB];
+      arr[indexB] = temp;
+    };
+
+    swapArrayElements(pot1, 0, 1); // swap elements to avoid infinite loop
+    // console.log("after swap pot " + potKey1, pot1);
+    // swapArrayElements(pot2, 0, 1);
+    // console.log("after swap pot " + potKey2, pot2);
+    // util.shuffleArray(pot1);
+    // util.shuffleArray(pot2);
   }
 
   // If no valid match was found, fall back to next available teams
