@@ -1,6 +1,7 @@
 const util = require("../util/util");
 const exibitionsFile = "./exibitions.json";
 let exibitions = loadExibitions();
+let groups = [];
 
 exports.updateTeamStandings = (groups, group, result, team1, team2) => {
   const forfeitProbability = 0.005; // used for simulating forfeit (to be implemented...)
@@ -45,7 +46,8 @@ exports.updateTeamStandings = (groups, group, result, team1, team2) => {
   );
 };
 
-exports.initializeStandings = (groups) => {
+exports.initializeStandings = (data) => {
+  groups = data;
   // initializes all the standings fields in groups array
   Object.keys(groups).forEach((group) => {
     groups[group] = groups[group].map((team) => ({
@@ -60,6 +62,25 @@ exports.initializeStandings = (groups) => {
     }));
   });
   return groups;
+};
+
+exports.setCondition = (condition, iso) => {
+  if (condition < 0) {
+    condition = 0;
+  } else if (condition > 1) {
+    condition = 1;
+  }
+  let team = null;
+  for (const group in groups) {
+    if (Object.prototype.hasOwnProperty.call(groups, group)) {
+      const teams = groups[group];
+      team = teams.find((t) => t.ISOCode === iso);
+      if (team) {
+        break;
+      }
+    }
+  }
+  team.condition = condition;
 };
 
 function initializeConditions(isoCode) {
@@ -97,6 +118,7 @@ function initializeConditions(isoCode) {
 
   return avgCondition;
 }
+
 async function loadExibitions() {
   try {
     exibitions = await util.readJSONFile(exibitionsFile);

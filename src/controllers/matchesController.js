@@ -104,6 +104,23 @@ function calculateScore(team1, team2) {
   let t1Condition = team1.condition; // condition is a number between 0 and 1
   let t2Condition = team2.condition;
 
+  let t1FIBA = team1.FIBARanking;
+  let t2FIBA = team2.FIBARanking;
+
+  let FIBAdiff = normalizeDifference(t1FIBA, t2FIBA); // used for lowering condition based on FIBA ranking
+  let newT1Condition, newT2Condition;
+  if (t1FIBA > t2FIBA) {
+    // this formula is gotten by trial and errror
+    newT1Condition = (t1Condition * 100 - FIBAdiff * 3) / 100; // t1 fiba ranking is higher therfore it's condition reduction is less severe
+    newT2Condition = (t2Condition * 100 - FIBAdiff * 5) / 100;
+  } else {
+    newT2Condition = (t2Condition * 100 - FIBAdiff * 3) / 100; // t2 fiba ranking is higher therefore it's condition reduction is less severe
+    newT1Condition = (t1Condition * 100 - FIBAdiff * 5) / 100;
+  }
+
+  standingsController.setCondition(newT1Condition, team1.ISOCode);
+  standingsController.setCondition(newT2Condition, team2.ISOCode);
+
   let score1 = Math.round(
     util.getRandomNumberBetween(minPoints, maxPoints) * t1Condition // random number between min and max multiplied by condition
   );
@@ -121,6 +138,21 @@ function calculateScore(team1, team2) {
   }
 
   return { score1, score2 };
+}
+function normalizeDifference(num1, num2) {
+  // Ensure num1 is less than or equal to num2
+  if (num1 > num2) {
+    [num1, num2] = [num2, num1]; // swap them
+  }
+
+  const difference = num2 - num1;
+
+  const maxDifference = 100;
+
+  const normalizedValue = 1 + (9 * difference) / maxDifference;
+
+  // return value between 1 and 10
+  return Math.max(1, Math.min(10, normalizedValue));
 }
 
 exports.getTeam = (groups, iso) => {
