@@ -142,11 +142,15 @@ exports.printGroups = (groups) => {
 exports.haveTeamsPlayedAlready = (team1, team2) => {
   let iso1 = team1.ISOCode;
   let iso2 = team2.ISOCode;
-  return matches.some(
+
+  let res = matches.some(
     (m) =>
       (m.team1ISO === iso1 && m.team2ISO === iso2) ||
       (m.team1ISO === iso2 && m.team2ISO === iso1)
   );
+  // console.log(iso1, iso2, res);
+  // console.log(matches);
+  return res;
 };
 
 async function loadExibitions() {

@@ -9,10 +9,10 @@ let pots = {
 };
 
 let quarterFinals = {
-  DG1: { team1: null, team2: null },
-  DG2: { team1: null, team2: null },
-  EF1: { team1: null, team2: null },
-  EF2: { team1: null, team2: null },
+  DG1: {},
+  DG2: {},
+  EF1: {},
+  EF2: {},
 };
 
 exports.simulateQuarterFinals = (groups) => {
@@ -39,6 +39,7 @@ function drawTeams(groups) {
     });
   }
   teamsArray = teamsArray.sort((a, b) => a.rank - b.rank);
+  console.log(teamsArray);
 
   pots.D = [teamsArray[0], teamsArray[1]];
   pots.E = [teamsArray[2], teamsArray[3]];
@@ -53,104 +54,33 @@ function drawTeams(groups) {
 }
 
 function drawQuarterFinalists() {
-  // ...to be finished
-  console.log(pots);
+  let DG1 = drawMatch("D", "G");
+  let DG2 = drawMatch("D", "G");
 
-  quarterFinals.DG1 = drawMatch(pots.D, pots.G);
-  quarterFinals.DG2 = drawMatch(pots.D, pots.G);
+  let EF1 = drawMatch("E", "F");
+  let EF2 = drawMatch("E", "F");
 
-  quarterFinals.EF1 = drawMatch(pots.E, pots.F);
-  quarterFinals.EF2 = drawMatch(pots.E, pots.F);
-  // console.log(pots);
-  // console.log(quarterFinals);
+  quarterFinals.DG1 = DG1;
+  quarterFinals.DG2 = DG2;
+  quarterFinals.EF1 = EF1;
+  quarterFinals.EF2 = EF2;
+  console.log(quarterFinals);
 }
 function drawMatch(pot1, pot2) {
-  // needs to be re-written entirely
-  // let team1 = pot1.shift();
-  // let team2 = pot2.shift();
-  // let result = {
-  //   draw1: [],
-  //   draw2: [],
-  // };
-  // let foundMatch = false;
-  // for (let i = 0; i < pot1.length; i++) {
-  //   if (foundMatch) {
-  //     break;
-  //   }
-  //   for (let j = 0; j < pot2.length; j++) {
-  //     const team1 = pot1[i];
-  //     const team2 = pot2[j];
-  //     if (matchesController.haveTeamsPlayedAlready(team1, team2)) {
-  //       console.log(
-  //         `Teams ${team1.ISOCode} and ${team2.ISOCode} have already played. Redrawing.`
-  //       );
-  //     } else {
-  //       console.log(
-  //         `teams drawn: team1: ${pot1[i].ISOCode}\t team2: ${pot2[j].ISOCode}`
-  //       );
-  //       delete pot1[i];
-  //       delete pot2[j];
-  //       foundMatch = true;
-  //       break;
-  //     }
-  //   }
-  // }
-
-  let attempts = 0;
-  const maxAttempts = 16; // Set a maximum number of attempts to prevent infinite loops
-
-  while (attempts < maxAttempts) {
-    // Draw teams
-    let team1 = pot1.shift();
-    let team2 = pot2.shift();
-    let canTeamsPlay = matchesController.haveTeamsPlayedAlready(team1, team2);
-
-    // Used because there is possible issue in the assignment where it is impossible for two teams to be drawn from E and F pots having never played against eachother in the group phase
-    canTeamsPlay = true;
-
-    // Check if teams have played against each other
-    if (canTeamsPlay) {
-      // Return the valid match
-      return {
-        team1,
-        team2,
-      };
+  let team1, team2;
+  pot1 = pots[pot1];
+  pot2 = pots[pot2];
+  while (pot1.length > 0 && pot2.length > 0) {
+    team1 = pot1.pop();
+    team2 = pot2.pop();
+    if (!matchesController.haveTeamsPlayedAlready(team1, team2)) {
+      return [team1, team2];
     }
-    console.log(
-      `These teams already played: ${team1.ISOCode} - ${team2.ISOCode}`
-    );
-    // If invalid match, push teams back and try again
-    pot1.push(team1);
-    pot2.push(team2);
-    attempts++;
+    pot1.unshift(team1);
+    pot2.unshift(team2);
+    util.shuffleArray(pot1);
+    util.shuffleArray(pot2);
   }
-
-  // If maximum attempts are reached and no valid match found, handle the error
-  throw new Error("Unable to draw a valid match after multiple attempts");
-
-  // while (matchesController.haveTeamsPlayedAlready(team1, team2)) {
-  //   console.log(
-  //     `Teams ${team1.ISOCode} and ${team2.ISOCode} have already played. Redrawing.`
-  //   );
-
-  //   // Push the teams back into the pots
-  //   pot1.push(team1);
-  //   pot2.push(team2);
-
-  //   // Check if pots are empty
-  //   if (pot1.length === 0 || pot2.length === 0) {
-  //     console.error("Pots are empty. Cannot find a new pair.");
-  //     return null;
-  //   }
-
-  //   // draw new teams
-  //   team1 = pot1.shift();
-  //   team2 = pot2.shift();
-  // }
-  // return {
-  //   team1,
-  //   team2,
-  // };
 }
 
 function printDrawResults() {
