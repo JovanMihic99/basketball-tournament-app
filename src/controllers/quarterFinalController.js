@@ -19,6 +19,7 @@ exports.simulateQuarterFinals = (groups) => {
   drawTeams(groups);
   printDrawResults();
   drawQuarterFinalists();
+  return { ...quarterFinals };
   // console.log(groups);
 };
 
@@ -39,7 +40,7 @@ function drawTeams(groups) {
     });
   }
   teamsArray = teamsArray.sort((a, b) => a.rank - b.rank);
-  console.log(teamsArray);
+  // console.log(teamsArray);
 
   pots.D = [teamsArray[0], teamsArray[1]];
   pots.E = [teamsArray[2], teamsArray[3]];
@@ -64,7 +65,7 @@ function drawQuarterFinalists() {
   quarterFinals.DG2 = DG2;
   quarterFinals.EF1 = EF1;
   quarterFinals.EF2 = EF2;
-  console.log(quarterFinals);
+  // console.log(quarterFinals);
 }
 function drawMatch(pot1, pot2) {
   let team1, team2;
