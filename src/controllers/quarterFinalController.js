@@ -9,10 +9,10 @@ let pots = {
 };
 
 let quarterFinals = {
-  DG1: {},
-  DG2: {},
-  EF1: {},
-  EF2: {},
+  DG1: [],
+  DG2: [],
+  EF1: [],
+  EF2: [],
 };
 
 exports.simulateQuarterFinals = (groups) => {
@@ -20,6 +20,7 @@ exports.simulateQuarterFinals = (groups) => {
   printDrawResults();
   drawQuarterFinalists();
   console.log("\n Eliminaciona faza:");
+
   let matches = simulateMatches(groups);
   console.log("\n  Četvrtfinale:");
   matches.forEach((m) => {
@@ -27,11 +28,17 @@ exports.simulateQuarterFinals = (groups) => {
       `    ${m.team1Name} - ${m.team2Name} (${m.score1}:${m.score2})`
     );
   });
-  return { ...quarterFinals };
+  // create a winners object containing winner name, iso and pot
+  let winners = matches.map((m) =>
+    m.score1 > m.score2
+      ? { ISOCode: m.team1ISO, name: m.team1Name, pot: m.pot }
+      : { ISOCode: m.team2ISO, name: m.team2Name, pot: m.pot }
+  );
+  return winners;
 };
 
 function getTeam(groups, iso) {
-  //gets a team from group
+  // gets a team from group
   for (const group in groups) {
     if (Object.prototype.hasOwnProperty.call(groups, group)) {
       const teams = groups[group];
@@ -88,7 +95,7 @@ function drawQuarterFinalists() {
   quarterFinals.DG2 = DG2;
   quarterFinals.EF1 = EF1;
   quarterFinals.EF2 = EF2;
-  // console.log(quarterFinals);
+  console.log(quarterFinals);
 }
 function drawMatch(potKey1, potKey2) {
   let team1, team2;
@@ -151,6 +158,7 @@ function simulateMatches(groups) {
       let team1 = getTeam(groups, match[0].ISOCode);
       let team2 = getTeam(groups, match[1].ISOCode);
       let simulatedMatch = matchesController.simulateMatch(team1, team2);
+      simulatedMatch["pot"] = pot;
       result.push(simulatedMatch);
     }
   }
