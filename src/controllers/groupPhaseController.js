@@ -14,37 +14,41 @@ exports.simulateGroupPhase = async () => {
   await matchesController.simulateAllGroupMatches(groups); // simulate all the matches
   matches = matchesController.getMatches(); // put simulated matches into this variable
   matchesController.printMatchesByGroup(matches, groups); // print the matches in console
-
-  // matchesController.printGroups(groups);
   printGroupPhaseResults(groups);
-  // console.log(matches);
+  // matchesController.printGroups(groups);
   let result = {
     matches: matches,
     groups: groups,
   };
-  // console.log(result);
   return result;
 };
 
 function printGroupPhaseResults(groups) {
   // Prints final results of group phase
   console.log("Konačan plasman u grupama:");
-  let offset = 0;
-  Object.keys(groups).forEach((group) => {
-    let teams = [...groups[group]];
-    teams = rankTeamsInGroup(teams, matches); // Sort teams
+  Object.keys(groups).forEach((group, i) => {
+    let teams = groups[group];
+    teams = sortTeamsInGroup(teams, matches); // Sort teams
 
     console.log(
       `  Grupa ${group} (Ime | pobede/porazi | bodovi | postignuti koševi | primljeni koševi | koš razlika):`
     );
+    rankTeams(groups);
     // Loop through the sorted teams and print their stats
     teams.forEach((team, index) => {
-      if (index < 3) {
-        team.rank = offset + index + 1; // assign a rank from 1 to 9 for the first three ranked teams in each group
-      }
       printGroupPhaseTeam(team, index);
     });
-    offset += 3;
+  });
+}
+
+function rankTeams(groups) {
+  Object.keys(groups).forEach((group, i) => {
+    let teams = [...groups[group]];
+    // console.log("Grupa " + i, teams[3]);
+    teams[0].rank = i + 1; // first place in group
+    teams[1].rank = i + 4; // second place in group
+    teams[2].rank = i + 7; // third place in group
+    teams[3].rank = null; // fourth place in group
   });
 }
 
@@ -60,12 +64,14 @@ function printGroupPhaseTeam(team, index) {
     `    ${index + 1}. ${team.Team}`.padEnd(24) +
       ` | ${winLoss} | ${points} | ${scoredPoints} | ${concededPoints} | ${
         pointDifference > 0 ? "+" + pointDifference : pointDifference
-      } | ${team.rank}`
+      }` +
+      "|".padStart(2) +
+      ` ${team.rank}`
   );
 }
 
-function rankTeamsInGroup(teams, matches) {
-  return teams.sort((team1, team2) => {
+function sortTeamsInGroup(teams, matches) {
+  let result = teams.sort((team1, team2) => {
     // Step 1: Sort by tournament points
     let sortValue = team2.tournamentPoints - team1.tournamentPoints;
 
@@ -89,6 +95,7 @@ function rankTeamsInGroup(teams, matches) {
 
     return 0; // If no other criteria apply, consider them equal
   });
+  return result;
 }
 
 // Function to resolve three-team tie using point difference in mutual matches

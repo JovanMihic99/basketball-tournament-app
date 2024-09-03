@@ -129,7 +129,7 @@ exports.printGroups = (groups) => {
   groupsArray.forEach((group) => {
     groups[group].forEach((team) => {
       console.log(
-        `\t\t${team.Team} (ISO Code: ${team.ISOCode}, FIBA Ranking: ${team.FIBARanking}, Wins: ${team.wins}, Losses: ${team.losses}, Total Points: ${team.tournamentPoints})`
+        `\t\t${team.Team} (ISO Code: ${team.ISOCode}, FIBA Ranking: ${team.FIBARanking}, Wins: ${team.wins}, Losses: ${team.losses}, Total Points: ${team.tournamentPoints}, Rank: ${team.rank})`
       );
 
       // console.log(team);
