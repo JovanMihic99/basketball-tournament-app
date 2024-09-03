@@ -123,6 +123,21 @@ function calculateScore(team1, team2) {
   return { score1, score2 };
 }
 
+exports.getTeam = (groups, iso) => {
+  for (const group in groups) {
+    if (Object.prototype.hasOwnProperty.call(groups, group)) {
+      const teams = groups[group];
+      //   console.log(teams);
+      let res = teams.find((t) => t.ISOCode === iso);
+      if (res) {
+        // console.log(res);
+        return res;
+      }
+    }
+  }
+  return null;
+};
+
 exports.printGroups = (groups) => {
   // prints values of groups array into the console (used for debugging)
   let groupsArray = Object.keys(groups);
