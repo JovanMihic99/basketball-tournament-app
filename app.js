@@ -26,6 +26,7 @@ async function main() {
 
   console.log("\x1b[36m%s\x1b[0m", "\n  Finale:");
   console.log(
+    "\u001B[1m\u001B[37m",
     `    ${finalMatch.team1Name} - ${finalMatch.team2Name} (${finalMatch.score1}:${finalMatch.score2})`
   );
   let gold =
