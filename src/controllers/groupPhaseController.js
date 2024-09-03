@@ -31,7 +31,7 @@ function printGroupPhaseResults(groups) {
     teams = sortTeamsInGroup(teams, matches); // Sort teams
 
     console.log(
-      "\x1b[36m%s\x1b[0m",
+      "\x1b[38;5;110m",
       `  Grupa ${group} (Ime | pobede/porazi | bodovi | postignuti koševi | primljeni koševi | koš razlika):`
     );
     rankTeams(groups);

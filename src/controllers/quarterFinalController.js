@@ -130,7 +130,7 @@ function printDrawResults() {
   for (const pot in pots) {
     if (Object.prototype.hasOwnProperty.call(pots, pot)) {
       const el = pots[pot];
-      console.log("\x1b[38;5;50m", `  Šešir ${pot}\x1b[0m`);
+      console.log("\x1b[38;5;110m", `  Šešir ${pot}\x1b[0m`);
       console.log(`    ${el[0].name} \n    ${el[1].name}`);
     }
   }
