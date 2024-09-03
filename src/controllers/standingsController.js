@@ -59,14 +59,6 @@ exports.initializeStandings = (groups) => {
       condition: initializeConditions(team.ISOCode),
     }));
   });
-  // initializeConditions("GER");
-  console.log(groups);
-  // console.log();
-  // Object.keys(groups).forEach((group) => {
-  //   groups[group] = groups[group].map((team) => ({
-  //     ...team,
-  //   }));
-  // });
   return groups;
 };
 

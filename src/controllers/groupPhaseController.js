@@ -65,8 +65,7 @@ function printGroupPhaseTeam(team, index) {
       ` | ${winLoss} | ${points} | ${scoredPoints} | ${concededPoints} | ${
         pointDifference > 0 ? "+" + pointDifference : pointDifference
       }` +
-      "|".padStart(2) +
-      ` ${team.rank}`
+      "|".padStart(2)
   );
 }
 
