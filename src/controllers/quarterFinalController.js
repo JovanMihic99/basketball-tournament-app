@@ -75,12 +75,6 @@ function drawMatch(potKey1, potKey2) {
   // A Set to track previously attempted combinations
   const attemptedMatches = new Set();
 
-  // Helper function to generate a unique key for each pair
-  // function generateMatchKey(team1, team2) {
-  //   return `${team1}-${team2}`;
-  // }
-
-  // Limit the number of retries based on the number of possible combinations
   const maxAttempts = pot1.length * pot2.length;
   let attempts = 0;
 
