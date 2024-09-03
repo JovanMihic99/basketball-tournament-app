@@ -67,21 +67,53 @@ function drawQuarterFinalists() {
   quarterFinals.EF2 = EF2;
   // console.log(quarterFinals);
 }
-function drawMatch(pot1, pot2) {
+function drawMatch(potKey1, potKey2) {
   let team1, team2;
-  pot1 = pots[pot1];
-  pot2 = pots[pot2];
-  while (pot1.length > 0 && pot2.length > 0) {
+  pot1 = pots[potKey1];
+  pot2 = pots[potKey2];
+
+  // A Set to track previously attempted combinations
+  const attemptedMatches = new Set();
+
+  // Helper function to generate a unique key for each pair
+  // function generateMatchKey(team1, team2) {
+  //   return `${team1}-${team2}`;
+  // }
+
+  // Limit the number of retries based on the number of possible combinations
+  const maxAttempts = pot1.length * pot2.length;
+  let attempts = 0;
+
+  while (attempts < maxAttempts && pot1.length > 0 && pot2.length > 0) {
+    attempts++;
+
     team1 = pot1.pop();
     team2 = pot2.pop();
-    if (!matchesController.haveTeamsPlayedAlready(team1, team2)) {
-      return [team1, team2];
+    const matchKey = (team1, team2) => {
+      `${team1}-${team2}`;
+    };
+
+    // Check if this combination was already attempted
+    if (!attemptedMatches.has(matchKey)) {
+      attemptedMatches.add(matchKey); // Record this combination
+
+      if (!matchesController.haveTeamsPlayedAlready(team1, team2)) {
+        return [team1, team2]; // Valid match found
+      }
     }
+
+    // If the combination was already attempted or teams have played, put them back
     pot1.unshift(team1);
     pot2.unshift(team2);
     util.shuffleArray(pot1);
     util.shuffleArray(pot2);
   }
+
+  // If no valid match was found, fall back to next available teams
+  console.warn(
+    `Upozorenje:  Za date šešire (${potKey1}, ${potKey2}) nije bilo moguće naći sve parove koji nisu međusobno igrali utakmicu u grupnoj fazi.`
+  );
+  return [pot1.pop(), pot2.pop()];
 }
 
 function printDrawResults() {
