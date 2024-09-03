@@ -19,10 +19,10 @@ exports.simulateQuarterFinals = (groups) => {
   drawTeams(groups);
   printDrawResults();
   drawQuarterFinalists();
-  console.log("\n Eliminaciona faza:");
+  console.log("\x1b[36m%s\x1b[0m", "\n Eliminaciona faza:");
 
   let matches = simulateMatches(groups);
-  console.log("\n  Četvrtfinale:");
+  console.log("\x1b[36m%s\x1b[0m", "\n  Četvrtfinale:");
   matches.forEach((m) => {
     console.log(
       `    ${m.team1Name} - ${m.team2Name} (${m.score1}:${m.score2})`
@@ -120,17 +120,20 @@ function drawMatch(potKey1, potKey2) {
 
   // If no valid match was found, fall back to next available teams
   console.warn(
-    `Upozorenje:  Za date šešire (${potKey1}, ${potKey2}) nije bilo moguće naći sve parove koji nisu međusobno igrali utakmicu u grupnoj fazi.`
+    `\u001B[3m\u001B[90mUpozorenje:  Za date šešire (${potKey1}, ${potKey2}) nije bilo moguće naći sve parove koji nisu međusobno igrali utakmicu u grupnoj fazi.`
   );
   return [pot1.pop(), pot2.pop()];
 }
 
 function printDrawResults() {
-  console.log("\nŠeširi:");
-  console.log(`  Šešir D\n    ${pots.D[0].name}\n    ${pots.D[1].name}`);
-  console.log(`  Šešir E\n    ${pots.E[0].name}\n    ${pots.E[1].name}`);
-  console.log(`  Šešir F\n    ${pots.F[0].name}\n    ${pots.F[1].name}`);
-  console.log(`  Šešir G\n    ${pots.G[0].name}\n    ${pots.G[1].name}`);
+  console.log("\x1b[36m%s\x1b[0m", "\nŠeširi:");
+  for (const pot in pots) {
+    if (Object.prototype.hasOwnProperty.call(pots, pot)) {
+      const el = pots[pot];
+      console.log("\x1b[38;5;50m", `  Šešir ${pot}\x1b[0m`);
+      console.log(`    ${el[0].name} \n    ${el[1].name}`);
+    }
+  }
 }
 
 function simulateMatches(groups) {

@@ -29,7 +29,7 @@ exports.getMatches = () => {
 };
 
 exports.printMatchesByGroup = (matches, groups) => {
-  console.log("GRUPNA FAZA:");
+  console.log("\x1b[36m%s\x1b[0m", "GRUPNA FAZA:");
   const romanNumerals = {
     1: "I",
     2: "II",
@@ -43,7 +43,7 @@ exports.printMatchesByGroup = (matches, groups) => {
   };
   let startValueJ = 0; // start value for J is used to print only 2 matches at a time.
   for (let i = 0; i < 9; i++) {
-    console.log(`  ${romanNumerals[i + 1]} kolo:`);
+    console.log("\x1b[36m%s\x1b[0m", `  ${romanNumerals[i + 1]} kolo:`);
     for (let j = startValueJ; j < 2 + startValueJ; j++) {
       const match = matches[j];
       console.log(

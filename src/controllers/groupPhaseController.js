@@ -25,16 +25,18 @@ exports.simulateGroupPhase = async () => {
 
 function printGroupPhaseResults(groups) {
   // Prints final results of group phase
-  console.log("Konačan plasman u grupama:");
+  console.log("\x1b[36m%s\x1b[0m", "Konačan plasman u grupama:");
   Object.keys(groups).forEach((group, i) => {
     let teams = groups[group];
     teams = sortTeamsInGroup(teams, matches); // Sort teams
 
     console.log(
+      "\x1b[36m%s\x1b[0m",
       `  Grupa ${group} (Ime | pobede/porazi | bodovi | postignuti koševi | primljeni koševi | koš razlika):`
     );
     rankTeams(groups);
     // Loop through the sorted teams and print their stats
+
     teams.forEach((team, index) => {
       printGroupPhaseTeam(team, index);
     });
@@ -59,8 +61,14 @@ function printGroupPhaseTeam(team, index) {
   const scoredPoints = team.pointsScored;
   const concededPoints = team.pointsConceded;
   const pointDifference = scoredPoints - concededPoints;
-
+  let colors = {
+    0: "\x1b[38;5;253m",
+    1: "\x1b[38;5;251m",
+    2: "\x1b[38;5;249m",
+    3: "\x1b[38;5;247m",
+  };
   console.log(
+    colors[index],
     `    ${index + 1}. ${team.Team}`.padEnd(24) +
       ` | ${winLoss} | ${points} | ${scoredPoints} | ${concededPoints} | ${
         pointDifference > 0 ? "+" + pointDifference : pointDifference

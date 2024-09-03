@@ -32,7 +32,7 @@ function simulateMatches(qFinalWinners, groups) {
       )
     );
   });
-  console.log("\n  Polufinale");
+  console.log("\x1b[36m%s\x1b[0m", "\n  Polufinale:");
   matches.forEach((m) => {
     console.log(
       `    ${m.team1Name} - ${m.team2Name} (${m.score1}:${m.score2})`

@@ -2,8 +2,8 @@
   {
     "team1ISO": "CAN",
     "team2ISO": "AUS",
-    "score1": 59,
-    "score2": 89,
+    "score1": 100,
+    "score2": 97,
     "team1Name": "Kanada",
     "team2Name": "Australija",
     "id": 1
@@ -11,8 +11,8 @@
   {
     "team1ISO": "CAN",
     "team2ISO": "GRE",
-    "score1": 56,
-    "score2": 88,
+    "score1": 64,
+    "score2": 90,
     "team1Name": "Kanada",
     "team2Name": "Grčka",
     "id": 2
@@ -20,8 +20,8 @@
   {
     "team1ISO": "CAN",
     "team2ISO": "ESP",
-    "score1": 82,
-    "score2": 110,
+    "score1": 73,
+    "score2": 85,
     "team1Name": "Kanada",
     "team2Name": "Španija",
     "id": 3
@@ -29,8 +29,8 @@
   {
     "team1ISO": "AUS",
     "team2ISO": "GRE",
-    "score1": 112,
-    "score2": 58,
+    "score1": 91,
+    "score2": 82,
     "team1Name": "Australija",
     "team2Name": "Grčka",
     "id": 4
@@ -38,8 +38,8 @@
   {
     "team1ISO": "AUS",
     "team2ISO": "ESP",
-    "score1": 75,
-    "score2": 88,
+    "score1": 93,
+    "score2": 107,
     "team1Name": "Australija",
     "team2Name": "Španija",
     "id": 5
@@ -47,8 +47,8 @@
   {
     "team1ISO": "GRE",
     "team2ISO": "ESP",
-    "score1": 58,
-    "score2": 74,
+    "score1": 94,
+    "score2": 69,
     "team1Name": "Grčka",
     "team2Name": "Španija",
     "id": 6
@@ -56,8 +56,8 @@
   {
     "team1ISO": "GER",
     "team2ISO": "FRA",
-    "score1": 88,
-    "score2": 82,
+    "score1": 57,
+    "score2": 89,
     "team1Name": "Nemačka",
     "team2Name": "Francuska",
     "id": 7
@@ -65,8 +65,8 @@
   {
     "team1ISO": "GER",
     "team2ISO": "BRA",
-    "score1": 73,
-    "score2": 69,
+    "score1": 87,
+    "score2": 76,
     "team1Name": "Nemačka",
     "team2Name": "Brazil",
     "id": 8
@@ -74,8 +74,8 @@
   {
     "team1ISO": "GER",
     "team2ISO": "JPN",
-    "score1": 82,
-    "score2": 60,
+    "score1": 52,
+    "score2": 59,
     "team1Name": "Nemačka",
     "team2Name": "Japan",
     "id": 9
@@ -83,8 +83,8 @@
   {
     "team1ISO": "FRA",
     "team2ISO": "BRA",
-    "score1": 88,
-    "score2": 82,
+    "score1": 69,
+    "score2": 81,
     "team1Name": "Francuska",
     "team2Name": "Brazil",
     "id": 10
@@ -92,8 +92,8 @@
   {
     "team1ISO": "FRA",
     "team2ISO": "JPN",
-    "score1": 86,
-    "score2": 56,
+    "score1": 84,
+    "score2": 58,
     "team1Name": "Francuska",
     "team2Name": "Japan",
     "id": 11
@@ -101,8 +101,8 @@
   {
     "team1ISO": "BRA",
     "team2ISO": "JPN",
-    "score1": 97,
-    "score2": 52,
+    "score1": 66,
+    "score2": 43,
     "team1Name": "Brazil",
     "team2Name": "Japan",
     "id": 12
@@ -110,8 +110,8 @@
   {
     "team1ISO": "USA",
     "team2ISO": "SRB",
-    "score1": 100,
-    "score2": 68,
+    "score1": 78,
+    "score2": 116,
     "team1Name": "Sjedinjene Države",
     "team2Name": "Srbija",
     "id": 13
@@ -119,8 +119,8 @@
   {
     "team1ISO": "USA",
     "team2ISO": "SSD",
-    "score1": 96,
-    "score2": 88,
+    "score1": 77,
+    "score2": 81,
     "team1Name": "Sjedinjene Države",
     "team2Name": "Južni Sudan",
     "id": 14
@@ -128,8 +128,8 @@
   {
     "team1ISO": "USA",
     "team2ISO": "PRI",
-    "score1": 89,
-    "score2": 103,
+    "score1": 96,
+    "score2": 72,
     "team1Name": "Sjedinjene Države",
     "team2Name": "Puerto Riko",
     "id": 15
@@ -137,7 +137,7 @@
   {
     "team1ISO": "SRB",
     "team2ISO": "SSD",
-    "score1": 74,
+    "score1": 93,
     "score2": 94,
     "team1Name": "Srbija",
     "team2Name": "Južni Sudan",
@@ -146,8 +146,8 @@
   {
     "team1ISO": "SRB",
     "team2ISO": "PRI",
-    "score1": 84,
-    "score2": 57,
+    "score1": 89,
+    "score2": 68,
     "team1Name": "Srbija",
     "team2Name": "Puerto Riko",
     "id": 17
@@ -155,8 +155,8 @@
   {
     "team1ISO": "SSD",
     "team2ISO": "PRI",
-    "score1": 89,
-    "score2": 74,
+    "score1": 75,
+    "score2": 104,
     "team1Name": "Južni Sudan",
     "team2Name": "Puerto Riko",
     "id": 18
