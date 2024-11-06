@@ -1,6 +1,6 @@
 # Olympic Basketball Tournament Simulation App
 
-A Command Line Interface (CLI) application built with Node.js to simulate an Olympic-style basketball tournament. This app handles match scheduling, group stages, and exhibition matches for teams.
+The **Basketball Tournament App** simulates an Olympic-style basketball tournament, featuring a group stage followed by an elimination phase. It simulates matches, ranks teams, and generates tournament results based on factors like team strength, match outcomes, and exhibition data.
 
 ## Table of Contents
 - [Features](#features)
@@ -10,10 +10,13 @@ A Command Line Interface (CLI) application built with Node.js to simulate an Oly
 - [Configuration](#configuration)
 
 ## Features
-- Simulate basketball tournament matches
-- Manage groups and teams
-- Schedule exhibition matches
-- Generate match results
+- **Group Stage Simulation**: Simulates all group stage matches, ranking teams based on points, head-to-head results, and goal differences.
+- **Match Outcomes**: Simulated results based on FIBA rankings to determine winning and losing probabilities.
+- **Ranked Teams**: Teams are ranked within their groups, with further ranking based on goal difference and points scored.
+- **Elimination Phase**: Top 8 teams advance to the knockout rounds (quarterfinals, semifinals, finals).
+- **Randomized Draw**: Quarterfinal teams are drawn randomly, ensuring no repeats from the group stage.
+- **Tournament Rounds**: Matches continue through the knockout rounds to determine the final results (gold, silver, bronze).
+- **Exhibition Match Data**: Includes exhibition match data to calculate team form and influence match probabilities.
 
 ## Technologies Used
 - Node.js v20.17.0
